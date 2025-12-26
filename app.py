@@ -1,3 +1,5 @@
+import os
+os.environ["STREAMLIT_SERVER_FILE_WATCHER_TYPE"] = "none"
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -241,7 +243,11 @@ with st.sidebar:
     menu = st.radio("SYSTEM MODULES", ["🚀 Dashboard", "🧠 AI Analysis", "⚡ Action Center", "🔮 Future Lab"])
     
     st.markdown("---")
-    uploaded_file = st.file_uploader("Upload CSV", type=['csv'])
+   uploaded_file = st.file_uploader(
+    "Upload CSV",
+    type=["csv"],
+    accept_multiple_files=False
+)
     
     if uploaded_file:
         df = get_data(uploaded_file=uploaded_file)
@@ -433,4 +439,5 @@ elif menu == "🔮 Future Lab":
     st.markdown("### ❤️ CUSTOMER SENTIMENT")
     fig_gauge = go.Figure(go.Indicator(mode="gauge+number", value=78, domain={'x': [0, 1], 'y': [0, 1]}, title={'text': "Customer Happiness Score"}, gauge={'axis': {'range': [None, 100]}, 'bar': {'color': "#00F0FF"}, 'bgcolor': "rgba(0,0,0,0)", 'steps': [{'range': [0, 50], 'color': '#333'}, {'range': [50, 80], 'color': '#555'}]}))
     fig_gauge.update_layout(paper_bgcolor="rgba(0,0,0,0)", font={'color': "white", 'family': "Rajdhani"})
+
     st.plotly_chart(fig_gauge, use_container_width=True)
