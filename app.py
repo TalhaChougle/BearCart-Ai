@@ -134,6 +134,15 @@ with st.sidebar:
     else:
         df = get_data()
         st.info("ℹ️ Simulation mode")
+# ==========================================
+# DATA SAFETY CHECKS (IMPORTANT)
+# ==========================================
+if 'hour_of_day' not in df.columns:
+    df['hour_of_day'] = np.random.randint(0, 24, len(df))
+
+if 'session_id' not in df.columns:
+    df['session_id'] = range(1, len(df) + 1)
+
 
 # ==========================================
 # DASHBOARD
@@ -203,3 +212,4 @@ elif menu == "🔮 Future Lab":
     query = st.text_input("Ask the AI about your data")
     if query:
         st.success("AI Insight: Focus on High Intent Mobile Users 🚀")
+
